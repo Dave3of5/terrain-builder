@@ -86,7 +86,7 @@ const Home = () => {
 
 
   function computeConnectionTangentOffset(pt1, pt2) {
-    return (pt2.x - pt1.x) / 2;
+    return Math.abs(pt2.x - pt1.x) / 2;
   }
 
   function sourceTangentX(pt1, pt2) {
@@ -153,7 +153,6 @@ const Home = () => {
     setConnections([...connections]);
   }
 
-
   function getNewConnectionPath(n) {
     const draggingConnectionType = n.connectors.output.findIndex(c => c.connectionDragging) === -1 ? 'input' : 'output';
     const connectionIndex = n.connectors[draggingConnectionType].findIndex(c => c.connectionDragging);
@@ -188,8 +187,6 @@ const Home = () => {
 
   function getConnection(c) {
     const sourcePoint = { x: c.from.node.x + (c.from.connector.type === 'input' ? 0 : NodeWidth), y: c.from.node.y + ((c.from.connector.index+1) * 20) };
-
-    //cx={n.x + (c.type === 'input' ? 0 : NodeWidth)} cy={n.y + (c.index+1) * 20}
     const destPoint = { x: c.to.node.x+ (c.to.connector.type === 'input' ? 0 : NodeWidth), y: c.to.node.y + (c.to.connector.index+1) * 20 };
     const sourceTangent = { x: sourceTangentX(sourcePoint, destPoint), y: sourceTangentY(sourcePoint, destPoint) };
     const destTangent = { x: destTangentX(sourcePoint, destPoint), y: destTangentY(sourcePoint, destPoint) };
@@ -208,10 +205,10 @@ const Home = () => {
         <div class={style.columnend}>
           <svg onMouseMove={onMouseMove} onMouseLeave={onMouseLeave} style="width: 100%; height: 98vh;" onMouseUp={stopConnectionDragging} >
             <g>
-
               {nodes.map(n => getNode(n))}
               {connections.map(c => getConnection(c))}
 
+              {/* Redraw new connection on top of everything */}
               <use xlinkHref="#newConnection"/>
             </g>
           </svg>
