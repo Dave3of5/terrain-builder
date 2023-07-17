@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
+import baseroute from '../baseroute';
 
 import Header from './header';
 
@@ -12,7 +13,7 @@ const App = () => (
 		{/* <Header /> */}
 		<main>
 			<Router>
-				<Home path="/" />
+				<Home path={`${baseroute}/`} />
 				{/* <Profile path="/profile/" user="me" />
 				<Profile path="/profile/:user" /> */}
 			</Router>
